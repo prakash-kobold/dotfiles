@@ -1,0 +1,6 @@
+[edit]
+    command = "vim"
+{{ $email := promptStringOnce . "email" "email" -}}
+
+[data]
+    email = {{ $email | quote }}

@@ -13,3 +13,16 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+[push]
+    default = current
+    autoSetupRemote = true
+
+[init]
+    defaultBranch = main
+
+[diff]
+    algorithm = histogram
+
+[merge]
+    conflictstyle = zdiff3

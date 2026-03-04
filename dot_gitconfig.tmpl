@@ -1,18 +1,21 @@
 [user]
-        name = Prakash Mohan
-        useConfigOnly = true
+    name = Prakash Mohan
+    useConfigOnly = true
 {{- if not (eq .email "") }}
-        email = {{ .email }}
+    email = {{ .email }}
 {{- end }}
 
 [color]
-        ui = true
+    ui = true
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[core]
+    pager = diff-so-fancy | less --tabs=4 -RFX
 
 [push]
     default = current

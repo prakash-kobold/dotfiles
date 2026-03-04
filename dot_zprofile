@@ -1,0 +1,15 @@
+# According to
+# http://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout
+# I should be putting all the paths and things like that in this file
+
+# User specific environment and startup programs
+
+# homebrew
+if [ -d "/opt/homebrew" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
+
+# zoxide
+export _ZO_DATA_DIR=$HOME/.local/share

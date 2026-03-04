@@ -1,0 +1,8 @@
+theme = one-dark-two
+
+copy-on-select = true
+macos-option-as-alt = true
+shell-integration = detect
+
+font-family = JetBrainsMono Nerd Font
+font-size = 13

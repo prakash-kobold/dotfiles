@@ -3,28 +3,33 @@
 
 brew bundle --file=/dev/stdin <<EOF
 
-brew "git"
-brew "git-lfs"
-brew "gcc"
-brew "fzf"
-brew "fd"
 brew "chezmoi"
 brew "clang-format"
 brew "coreutils"
+brew "diff-so-fancy"
+brew "fd"
+brew "fzf"
 brew "gawk"
+brew "gcc"
 brew "ghostscript"
+brew "git"
+brew "git-lfs"
 brew "htop"
 brew "imagemagick"
+brew "luarocks"
+brew "neovim"
 brew "ripgrep"
 brew "tmux"
+brew "tree-sitter"
+brew "tree-sitter-cli"
 brew "uv"
-brew "zsh"
-brew "diff-so-fancy"
 brew "zoxide"
-brew "neovim"
-
-cask "ghostty"
+brew "zsh"
 cask "font-jetbrains-mono-nerd-font"
+cask "ghostty"
+cask "iterm2"
+cask "tailscale-app"
+
 EOF
 
 {{ end -}}

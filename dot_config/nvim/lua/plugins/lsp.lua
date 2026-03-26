@@ -57,6 +57,22 @@ return {
 
       ---@type table<string, vim.lsp.Config>
       local servers = {
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                -- Disable built-in linting/formatting in favor of ruff
+                pycodestyle = { enabled = false },
+                pyflakes = { enabled = false },
+                mccabe = { enabled = false },
+                autopep8 = { enabled = false },
+                yapf = { enabled = false },
+                pylsp_ruff = { enabled = true },
+              },
+            },
+          },
+        },
+        ruff = {},
         lua_ls = {
           on_init = function(client)
             if client.workspace_folders then
@@ -83,7 +99,7 @@ return {
       }
 
       -- Formatters/linters managed by Mason but not registered as LSPs
-      local extra_tools = { 'stylua' }
+      local extra_tools = { 'stylua', 'python-lsp-server', 'ruff' }
       local ensure_installed = vim.tbl_keys(servers or {})
 
       require('mason-tool-installer').setup {

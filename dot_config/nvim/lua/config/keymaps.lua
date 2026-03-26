@@ -17,6 +17,22 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Exit terminal mode more easily
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- Make Y behave like D and C (yank to end of line)
+vim.keymap.set('n', 'Y', 'y$', { desc = 'Yank to end of line' })
+
+-- Use Q for formatting instead of Ex mode
+vim.keymap.set('n', 'Q', 'gq', { desc = 'Format with Q' })
+
+-- Break undo sequence before C-U in insert mode
+vim.keymap.set('i', '<C-U>', '<C-G>u<C-U>', { desc = 'Break undo before C-U' })
+
+-- Toggle spell check
+vim.keymap.set('n', '<F9>', '<cmd>set invspell<CR>', { desc = 'Toggle spell check' })
+
+-- Remove trailing whitespace
+vim.keymap.set('n', ';tr', ':%s/\\s\\+$//<CR>', { desc = 'Remove trailing whitespace' })
+vim.keymap.set('v', ';tr', ':s/\\s\\+$//<CR>', { desc = 'Remove trailing whitespace' })
+
 -- Window navigation
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })

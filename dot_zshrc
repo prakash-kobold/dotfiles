@@ -31,7 +31,6 @@ zinit wait lucid light-mode for \
        "OMZP::fzf" \
        has'fzf' @Aloxaf/fzf-tab \
        "OMZP::git" \
-       "OMZP::tmux" \
        "OMZP::zoxide"
 
 zinit ice lucid from"gh-r" as"command" \
@@ -88,6 +87,9 @@ bindkey "^[[1;5B" down-line-or-history  # [CTRL] + Cursor down
 # Use ctrl-p/n to go up/down search
 bindkey "^P" up-line-or-beginning-search
 bindkey "^N" down-line-or-beginning-search
+
+# Source secrets if present
+[[ ! -f ~/.shell-secrets ]] || source ~/.shell-secrets
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

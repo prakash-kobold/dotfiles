@@ -1,3 +1,7 @@
+# JupyterHub: copies the hub's env vars (JUPYTERHUB_USER etc.) into SSH sessions.
+# Must run before anything that checks JUPYTERHUB_USER.
+[ -f /usr/local/bin/ts-ssh-env.sh ] && . /usr/local/bin/ts-ssh-env.sh # ts-ssh-env
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -12,6 +16,19 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
+
+## JupyterHub-only tools: the image lacks these and Homebrew covers them on the
+## Mac. Loaded synchronously so fzf/zoxide are on PATH before their OMZ plugins.
+## Each tool is skipped if it is already on PATH (e.g. the image starts shipping
+## it). bpick is only set where a release has more than one asset for this platform.
+if [[ $OSTYPE == linux* && -n $JUPYTERHUB_USER ]]; then
+  zinit from"gh-r" as"program" lucid light-mode for \
+    if'(( ! $+commands[nvim] ))' bpick"*.tar.gz" pick"nvim-*/bin/nvim" neovim/neovim \
+    if'(( ! $+commands[tree-sitter] ))' bpick"tree-sitter-linux-*.gz" mv"tree-sitter-* -> tree-sitter" pick"tree-sitter" tree-sitter/tree-sitter \
+    if'(( ! $+commands[fzf] ))' pick"fzf" junegunn/fzf \
+    if'(( ! $+commands[zoxide] ))' pick"zoxide" ajeetdsouza/zoxide
+  zinit if'(( ! $+commands[diff-so-fancy] ))' as"program" pick"diff-so-fancy" lucid light-mode for so-fancy/diff-so-fancy
+fi
 
 ## Powerlevel10k
 zinit ice lucid depth"1"

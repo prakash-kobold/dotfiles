@@ -34,6 +34,13 @@ if [[ $OSTYPE == linux* && -n $JUPYTERHUB_USER ]]; then
   # and vim can't write ~/.viminfo, so use nvim, which has a workaround.
   ZSH_DISABLE_COMPFIX=true
   export EDITOR=nvim
+  # Saving history by copy + rename would change the file's owner, so zsh skips
+  # it; rewrite in place instead (the daily backups below cover a torn write).
+  unsetopt HIST_SAVE_BY_COPY
+  # The image's /etc/zsh/zshrc defines precmd() { vcs_info } for its own prompt.
+  # p10k replaces that prompt, and the extra vcs_info costs ~0.3 s per prompt in
+  # repos gitstatusd can't open.
+  (( $+functions[precmd] )) && unfunction precmd
 fi
 
 ## Powerlevel10k

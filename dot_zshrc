@@ -28,6 +28,12 @@ if [[ $OSTYPE == linux* && -n $JUPYTERHUB_USER ]]; then
     if'(( ! $+commands[fzf] ))' pick"fzf" junegunn/fzf \
     if'(( ! $+commands[zoxide] ))' pick"zoxide" ajeetdsouza/zoxide
   zinit if'(( ! $+commands[diff-so-fancy] ))' as"program" pick"diff-so-fancy" lucid light-mode for so-fancy/diff-so-fancy
+
+  # $HOME files show up owned by another uid on JH. OMZ's compaudit then flags
+  # its own dirs as insecure and skips completions (chmod can't fix ownership),
+  # and vim can't write ~/.viminfo, so use nvim, which has a workaround.
+  ZSH_DISABLE_COMPFIX=true
+  export EDITOR=nvim
 fi
 
 ## Powerlevel10k
@@ -83,11 +89,13 @@ setopt HIST_FIND_NO_DUPS
 export HIST_BACKUP_DIR="${HOME}/.zsh_history_backups"
 
 function backup_zsh_history() {
+    # Nothing to back up in a fresh home (e.g. a new JH server)
+    [[ -f "${HISTFILE}" ]] || return 0
     [[ -d "${HIST_BACKUP_DIR}" ]] || mkdir -p "${HIST_BACKUP_DIR}"
     local bak="${HIST_BACKUP_DIR}/zsh_history_$(date +%Y_%m_%d).bak"
     [[ -f "$bak" ]] || cp "${HISTFILE}" "$bak"
-    local backups=("${HIST_BACKUP_DIR}"/*.bak(om))
-    (( ${#backups} > 10 )) && rm "${backups[11,-1]}"
+    local backups=("${HIST_BACKUP_DIR}"/*.bak(Nom))
+    (( ${#backups} > 10 )) && rm -- "${(@)backups[11,-1]}"
 }
 
 backup_zsh_history
